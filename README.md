@@ -12,7 +12,7 @@ building a telegram bot with python
 2. installing the requirements. <br /> 
 `$ pip install -r requirements.txt`
 3. running the bot. <br /> 
-`$ pyrthon bot.py`
+`$ python bot.py`
 
 ### :handshake: Contributing
 Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/devincapriola/Telegram-Bot/issues).
