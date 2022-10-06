@@ -5,12 +5,13 @@ import datetime
 from telegram.ext import Updater, CommandHandler
 
 # Replace YOUR_TOKEN_KEY with your token string
+# To get your token, look at the README.md file or issue #1
 updater = Updater(
     token='YOUR_TOKEN_KEY', use_context=True)
 dispatcher = updater.dispatcher
 
 
-def start(update, context):
+def start(update):
     update.message.reply_text(
         """
         Hello, Please write\n/help to see the commands available.
@@ -18,7 +19,7 @@ def start(update, context):
     )
 
 
-def help(update, context):
+def help(update):
     update.message.reply_text(
         """
         I can help you with the following commands:
@@ -27,11 +28,11 @@ def help(update, context):
     )
 
 
-def joke(update, context):
+def joke(update):
     update.message.reply_text(pyjokes.get_joke())
 
 
-def quote(update, context):
+def quote(update):
     update.message.reply_text(
         """
         Quote of the day:
@@ -45,7 +46,7 @@ def quote(update, context):
     update.message.reply_text(quote['alt'])
 
 
-def date(update, context):
+def date(update):
     update.message.reply_text(
         """
         Date:
@@ -55,7 +56,7 @@ def date(update, context):
     update.message.reply_text(date.strftime("%m/%d/%Y"))
 
 
-def time(update, context):
+def time(update):
     update.message.reply_text(
         """
         Time:
@@ -65,10 +66,22 @@ def time(update, context):
     update.message.reply_text(time.strftime("%H:%M"))
 
 
+def bitcoin(update):
+    update.message.reply_text(
+        """
+        Bitcoin Price:
+        """
+    )
+    res = requests.get('https://api.coindesk.com/v1/bpi/currentprice.json')
+    data = res.json()
+    update.message.reply_text(data['bpi']['USD']['rate'])
+
+
 dispatcher.add_handler(CommandHandler('start', start))
 dispatcher.add_handler(CommandHandler('help', help))
 dispatcher.add_handler(CommandHandler('joke', joke))
 dispatcher.add_handler(CommandHandler('quote', quote))
 dispatcher.add_handler(CommandHandler('date', date))
 dispatcher.add_handler(CommandHandler('time', time))
+dispatcher.add_handler(CommandHandler('bitcoin', bitcoin))
 updater.start_polling()
